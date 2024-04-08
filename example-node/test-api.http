@@ -1,0 +1,13 @@
+@port=3000
+
+###
+GET http://localhost:{{port}}
+
+###
+POST http://localhost:3000/postsomething
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "age": 30
+}

@@ -12,6 +12,8 @@
 # below:
 .git
 .gitignore
+readme.md
+test-api.http
 
 # Node.js dependencies:
 node_modules/

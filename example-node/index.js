@@ -7,7 +7,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/about', (req, res) => {
-  res.send('<h1>About</h1><p>This is a simple Express app</p>')
+  const now = new Date()
+  const str = `<h1>About</h1><p>This is a simple Express app</p><p>${now.toISOString()}</p>`
+  res.send(str)
 })
 
 

@@ -8,10 +8,10 @@ GET http://localhost:{{port}}/about
 
 
 ###
-POST http://localhost:3000/postsomething
+POST http://localhost:{{port}}/addnumbers
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "age": 30
+  "x": "50",
+  "y": "35"
 }

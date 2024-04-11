@@ -18,7 +18,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 
 // serve static html files and images from the public folder
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 // set the correct header information
@@ -58,10 +58,11 @@ let teams = []
 let matches = []
 
 // the default route
- 
+/* 
 app.get('/', (req, res) => {
-  res.send('<html><body><h1>ACS - Soccer App</h1></body></html>')
+  res.send('<html><body><h1>ACS - Soccer App - NEW</h1></body></html>')
 })
+*/
 
 /**
  * team endpoints

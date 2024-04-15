@@ -53,6 +53,8 @@ Content-Type: application/json
 ### delete match with id
 DELETE {{server}}/api/match/{{newmatchid}}
 
+### get of root
+GET {{server}}/
 
 ### options of root
 OPTIONS {{server}}/

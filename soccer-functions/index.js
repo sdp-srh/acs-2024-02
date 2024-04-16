@@ -69,7 +69,6 @@ const loadStatusData = async (firestore) => {
 functions.http('load-openliga-data', async (req, res) => {
   const start = Date.now()
   console.log('load openliga data called')
-  
   const firestore = new Firestore()
   const [teamsCount, matchesCount, rankingsCount, olStatus] = await Promise.all([loadTeamData(firestore), loadMatchData(firestore), loadTableData(firestore), loadStatusData(firestore)]);
   let message = `Loaded matches (${matchesCount}), teams (${teamsCount}), rankings (${rankingsCount}), lastUpate (${olStatus.lastUpdate}), currentMatchDay (${olStatus.groupOrderID})`

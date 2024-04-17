@@ -43,8 +43,8 @@ app.post('/api/de2en', async (req, res) => {
   const source = req.body.source
   const translate = new Translate()
   const options = {from: 'de', to: 'en'}
-  const [translation] = await translate.translate(source, options)
-  res.send({translation: translation})
+  const [translationResult] = await translate.translate(source, options)
+  res.send({translation: translationResult})
 })
 
 

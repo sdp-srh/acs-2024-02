@@ -8,6 +8,8 @@ const {Translate} = require('@google-cloud/translate').v2
 // big query api
 const { BigQuery } = require('@google-cloud/bigquery');
 
+const { VertexAI } = require('@google-cloud/vertexai')
+
 // use winston as logger
 const winston = require('winston');
 // Imports the Google Cloud client library for Winston
@@ -106,7 +108,37 @@ app.get('/test/logerror', async (req, res) => {
   res.send(`<h1>${msg}</h1>`)
 })
 
+app.post('/api/gemini', async (req, res) => {
+  
+  // setup the vertex ai client
+  const vertex_ai = new VertexAI({project: 'acs-2023-02', location: 'us-central1'})
 
+  // get the prompt from the frontend request
+  const prompt = req.body.prompt
+  // configure and get the generative model
+  const generativeModel = vertex_ai.preview.getGenerativeModel({
+    model: 'gemini-pro',
+    generation_config: {
+      'maxOutputTokens': 2048,
+      'temperature': 0.9,
+      'topP': 1,
+      'candidateCount': 1
+    }
+  })
+  // define the aiRequest, which will be send to the generative model
+  const aiRequest = {
+    contents: [{role: 'user', parts: [{text: prompt}]}]
+  }
+
+  // generate the content (aiResponse) with the generative model
+  const aiResponse = await generativeModel.generateContent(aiRequest) 
+  let aiAnswer = ''
+  // combine the text answers (parts) to a single string (aiAnswer)
+  aiResponse.response.candidates[0].content.parts.forEach((part) => aiAnswer += part.text)
+  console.log(aiAnswer)
+  // send the prompt and the aiAnswer back to the frontend
+  res.send({prompt: prompt, answer: aiAnswer})
+});
 
 app.listen(port, async () => {
   logger.info(`test service is running on ${port}`)

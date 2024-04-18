@@ -30,3 +30,11 @@ GET {{server}}/test/loginfo
 
 ### log an info message
 GET {{server}}/test/logerror
+
+### translate to german
+POST {{server}}/api/gemini
+Content-Type: application/json
+
+  {
+    "prompt": "Please tell a joke about a professor"
+  }

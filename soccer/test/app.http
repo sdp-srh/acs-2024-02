@@ -14,6 +14,15 @@ GET {{server}}/api/team/25ae03be-8b74-4443-9b3c-71737566c567
 ### read all matches
 GET {{server}}/api/match
 
+### read ranking
+GET {{server}}/api/ranking
+
+
+### read status
+GET {{server}}/api/status
+
+
+
 ### read all match with id
 GET {{server}}/api/match/{{newmatchid}}
 

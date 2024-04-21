@@ -108,8 +108,8 @@ app.get('/test/logerror', async (req, res) => {
   res.send(`<h1>${msg}</h1>`)
 })
 
+
 app.post('/api/gemini', async (req, res) => {
-  
   // setup the vertex ai client
   const vertex_ai = new VertexAI({project: 'acs-2023-02', location: 'us-central1'})
 

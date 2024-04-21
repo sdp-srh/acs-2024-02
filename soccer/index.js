@@ -10,6 +10,8 @@ const express = require('express')
 const fs = require('fs')
 const path = require('path')
 
+const { Firestore } = require('@google-cloud/firestore')
+const { readMatches, readTeams, readRankings, readStatus } = require('./db')
 
 // start express app
 const app = express()
@@ -69,36 +71,63 @@ app.get('/', (req, res) => {
  */
 
 // gets all teams
-app.get('/api/team', (req, res) => {
+app.get('/api/team', async (req, res) => {
+  const teams = await readTeams()
   res.send(teams)
 })
 
+app.get('/api/dummyteams', async (req, res) => {
+  const rawData = fs.readFileSync('./data/olteams.json')
+  const teams = JSON.parse(rawData)
+  res.send(teams)
+})
 
 // find a team with an ID
 app.get('/api/team/:id', (req, res) => {
   const requestId = req.params.id
   console.log(`Looking for Team with id: ${requestId}`)
+  const teams = readTeams()
   const result = teams.find(team => team.id === requestId)
   res.send(result)
 })
 
+app.get('/api/status', async (req, res) => {
+  const status = await readStatus()
+  res.send(status)
+})
+
+
+
+app.get('/api/ranking', async (req, res) => {
+  const entries = await readRankings()
+  res.send(entries)
+})
 
 /**
  * match endpoints
  */
-app.get('/api/match', (req,res) => {
+/*
+app.get('/match', (req,res) => {
+  res.send(matches)
+})
+*/
+
+app.get('/api/match', async (req,res) => {
+  const matches = await readMatches()
+  //const matches = await readMatches()
   res.send(matches)
 })
 
 
 // find a team with an ID
-app.get('/api/match/:id', (req, res) => {
+app.get('/api/match/:id', async (req, res) => {
   const requestId = req.params.id
-  console.log(`Looking for Team with id: ${requestId}`)
+  console.log(`Looking for Match with id: ${requestId}`)
+  const matches = await readMatches()
   const result = matches.find(match => match.id === requestId)
   res.send(result)
 })
-
+/*
 // creates a new match
 app.post('/api/match', (req, res) => {
   const newMatch = req.body
@@ -156,14 +185,15 @@ app.get('/api/findteams', (req, res) => {
   const results = teams.filter(team => team.name.toLowerCase().includes(term.toLowerCase()) )
   res.send(results)
 })
-
+*/
 /**
  * initializing app
  */
 app.listen(port, () => {
   console.log(`Soccer app is starting at ${port}`)
-  loadTeams()
-  loadMatches() 
+  // not required, because db is used
+  // loadTeams()
+  // loadMatches() 
   console.log('Soccer app running')
 })
 

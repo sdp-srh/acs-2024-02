@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/TeamsPage.vue')
   },  
   {
+    path: '/tips',
+    name: 'Tips',
+    component: () => import('@/views/TippsPage.vue')
+  },   
+  {
     path: '/:pathMatch(.*)*', // or '/:catchAll(.*)' for Vue Router 3
     name: 'NotFound',
     component: () => import('@/views/NotFoundPage.vue'),

@@ -31,7 +31,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'NotFound',
     component: () => import('@/views/NotFoundPage.vue'),
   }  
-
 ]
 
 const router = createRouter({

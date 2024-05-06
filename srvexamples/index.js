@@ -59,6 +59,16 @@ app.post('/api/en2de', async (req, res) => {
   res.send({translation: translation})
 })
 
+app.post('/api/translate', async (req, res) => {
+  const source = req.body.source
+  const from = req.body.from
+  const to = req.body.to
+  const translate = new Translate()
+  const options = {from: from, to: to}
+  const [translation] = await translate.translate(source, options);
+  res.send({translation: translation})
+})
+
 
 // big data query endpoint
 app.get('/api/google-trends', async (req, res) => {

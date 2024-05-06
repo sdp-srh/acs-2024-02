@@ -78,8 +78,8 @@ export default function Translator() {
 			});
 			*/
 			console.log(text)
-			const payload = { source: text }
-			const response = await fetch('/api/de2en', {
+			const payload = { source: text, from: inputFormat, to: outputFormat}
+			const response = await fetch('/api/translate', {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json"

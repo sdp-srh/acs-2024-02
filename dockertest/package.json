@@ -1,0 +1,20 @@
+{
+  "name": "dockertest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"kubectl get svc acsdocker2-cluster
+
+    kubectl expose deployment acsdocker2-cluster \
+        --type LoadBalancer \
+        --port 3001 \
+        --target-port 808
+  }
+}

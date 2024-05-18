@@ -12,7 +12,7 @@
                     <ion-col size="4" v-for="team in teams" :key="team.teamId" :value="team.teamId">
                         <ion-card>
                             <ion-card>
-                                <img :src="team.teamIconUrl" />
+                                <img :src="team.teamIconUrl" class="team-icon"/>
                                 <ion-card-header>
                                 <ion-card-title>{{team.teamName}}</ion-card-title>
                                 </ion-card-header>
@@ -72,7 +72,9 @@ ion-card {
 /* Ensures images/icons in the card have a consistent size */
 .team-icon {
     width: 100%; /* Full width of the card */
-    height: 150px; /* Fixed height, adjust as necessary */
+    height: 100%; /* Fixed height, adjust as necessary */
+    max-width: 200px;
+    max-height: 200px;
     object-fit: cover; /* Ensures the image covers the area without distortion */
 }
 

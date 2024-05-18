@@ -5,9 +5,10 @@
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content> 
-            <ion-item @click="navigate('/home')" :class="{selected: route.path.includes('/home'), clickable: true}">Home</ion-item>
+            <ion-item @click="navigate('/home')" :class="{selected: route.path.includes('/home'), clickable: true}" >Home</ion-item>
             <ion-item @click="navigate('/matches')" :class="{selected: route.path.includes('/matches'), clickable: true}">Matches</ion-item>                       
             <ion-item @click="navigate('/teams')" :class="{selected: route.path.includes('/teams'), clickable: true}">Teams</ion-item>    
+            <ion-item @click="navigate('/tipps')" :class="{selected: route.path.includes('/tipps'), clickable: true}">Tipps</ion-item>
             <!--<ion-item @click="navigate('/about')" :class="{selected: route.path.includes('/about'), clickable: true}"><ion-icon name="information-circle"></ion-icon>&nbsp;About</ion-item>    -->
         </ion-content>
       </ion-menu>
@@ -94,10 +95,12 @@ ion-menu.md ion-item {
   --padding-start: 10px;
   --padding-end: 10px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 ion-menu.md ion-item.selected {
   --background: rgba(var(--ion-color-primary-rgb), 0.14);
+    font-weight: bold;
 }
 
 ion-menu.md ion-item.selected ion-icon {

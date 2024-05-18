@@ -6,12 +6,14 @@
 // include libraries for microservices and file handling
 const express = require('express')
 
+require('dotenv').config(); 
 
 const fs = require('fs')
 const path = require('path')
 
 const { Firestore } = require('@google-cloud/firestore')
-const { readMatches, readTeams, readRankings, readStatus } = require('./db')
+const { readMatches, readTeams, readRankings, readStatus, readTipps, setTipps, readUsers, getUser  } = require('./db')
+
 
 // start express app
 const app = express()
@@ -72,8 +74,8 @@ app.get('/', (req, res) => {
 
 // gets all teams
 app.get('/api/team', async (req, res) => {
-  const teams = await readTeams()
-  res.send(teams)
+    const teams = await readTeams()
+    res.send(teams)
 })
 
 app.get('/api/dummyteams', async (req, res) => {
@@ -93,7 +95,11 @@ app.get('/api/team/:id', (req, res) => {
 
 app.get('/api/status', async (req, res) => {
   const status = await readStatus()
-  res.send(status)
+  const result = {
+    status: status,
+    tippsUntil: process.env.TIPPSUNTIL
+  }
+  res.send(result)
 })
 
 
@@ -127,6 +133,35 @@ app.get('/api/match/:id', async (req, res) => {
   const result = matches.find(match => match.id === requestId)
   res.send(result)
 })
+
+
+app.get('/api/tipp', async (req, res) => {
+  // read from logon info
+  const user = await getUser('testuser')
+  // TODO handle no tipps available and send shuffled teams
+  const tipps = await readTipps(user.id)
+  res.send(tipps)
+})
+
+app.post('/api/tipp', async (req, res) => {
+  // read from logon info
+  const user = await getUser('testuser')
+
+  // TODO check last date
+  const result = await setTipps(user.id)
+  const message = { status: 'ok', msg: 'Deine Tipps sind gespeichert. Viel Erfolg!'}
+  res.send(message)
+})
+
+
+app.get('/api/loggedin', async (req, res) => {
+  res.send(await getUser('testuser'))
+})
+
+app.get('/api/user', async (req, res) => {
+  res.send(await readUsers())
+})
+
 /*
 // creates a new match
 app.post('/api/match', (req, res) => {

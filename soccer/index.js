@@ -156,8 +156,8 @@ app.get('/api/result', asyncHandler(async (req, res) => {
 
 app.get('/api/resultplayer/:playerid', asyncHandler(async (req, res) => {
   const playerId = req.params.playerid
-  const points = await calculateResultDetailForPlayer(playerId)
-  res.send(points)
+  const details = await calculateResultDetailForPlayer(playerId)
+  res.send(details)
 }))
 
 

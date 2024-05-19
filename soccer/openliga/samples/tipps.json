@@ -134,18 +134,32 @@
     "player": "micki",
     "tipp": [
       {
+        "teamName": "Borussia Mönchengladbach",
+        "teamGroupName": null,
+        "teamId": 87,
+        "teamIconUrl": "https://i.imgur.com/KSIk0Eu.png",
+        "shortName": "Gladbach"
+      },
+      {
+        "teamName": "Eintracht Frankfurt",
+        "teamGroupName": null,
+        "teamId": 91,
+        "teamIconUrl": "https://i.imgur.com/X8NFkOb.png",
+        "shortName": "Frankfurt"
+      },
+      {
+        "teamName": "FC Bayern München",
+        "teamGroupName": null,
+        "teamId": 40,
+        "teamIconUrl": "https://i.imgur.com/jJEsJrj.png",
+        "shortName": "Bayern"
+      },
+      {
         "teamName": "FC Augsburg",
         "teamGroupName": null,
         "teamId": 95,
         "teamIconUrl": "https://i.imgur.com/sdE62e2.png",
         "shortName": "Augsburg"
-      },
-      {
-        "teamName": "VfL Bochum",
-        "teamGroupName": null,
-        "teamId": 129,
-        "teamIconUrl": "https://i.imgur.com/5jy3Gfr.png",
-        "shortName": "Bochum"
       },
       {
         "teamName": "Werder Bremen",
@@ -238,26 +252,13 @@
         "teamIconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Logo_Mainz_05.svg/1200px-Logo_Mainz_05.svg.png",
         "shortName": "Mainz"
       },
+
       {
-        "teamName": "Borussia Mönchengladbach",
+        "teamName": "VfL Bochum",
         "teamGroupName": null,
-        "teamId": 87,
-        "teamIconUrl": "https://i.imgur.com/KSIk0Eu.png",
-        "shortName": "Gladbach"
-      },
-      {
-        "teamName": "Eintracht Frankfurt",
-        "teamGroupName": null,
-        "teamId": 91,
-        "teamIconUrl": "https://i.imgur.com/X8NFkOb.png",
-        "shortName": "Frankfurt"
-      },
-      {
-        "teamName": "FC Bayern München",
-        "teamGroupName": null,
-        "teamId": 40,
-        "teamIconUrl": "https://i.imgur.com/jJEsJrj.png",
-        "shortName": "Bayern"
+        "teamId": 129,
+        "teamIconUrl": "https://i.imgur.com/5jy3Gfr.png",
+        "shortName": "Bochum"
       }
     ]
   }

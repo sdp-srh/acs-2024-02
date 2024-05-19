@@ -12,16 +12,16 @@
                 <ion-row >
                     <ion-col size="4" v-for="team in teams" :key="team.teamId" :value="team.teamId">
                         <ion-card>
-                            <ion-card>
                                 <img :src="team.teamIconUrl" class="team-icon"/>
                                 <ion-card-header>
                                 <ion-card-title>{{team.teamName}}</ion-card-title>
                                 </ion-card-header>
 
                                 <ion-card-content>
-                                    {{ team.shortName }}
+                                    <ion-text>{{ team.shortName }}</ion-text>
+                                    <router-link :to="{ path: `/team/${team.teamId}` }">Details</router-link>
+
                                 </ion-card-content>
-                            </ion-card>
                         </ion-card>
                     </ion-col>
                 </ion-row>

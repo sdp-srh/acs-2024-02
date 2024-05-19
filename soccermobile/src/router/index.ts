@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/PlayerResultPage.vue')
   },     
   {
-    path: '/team',
+    path: '/team/:teamId',
     name: 'Team',
     component: () => import('@/views/TeamPage.vue')
   },       

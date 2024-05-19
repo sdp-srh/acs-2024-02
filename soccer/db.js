@@ -175,4 +175,4 @@ const readUsers = async () => {
 }
 
 
-module.exports = { readTeams, readMatches, readLeagueTable, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, readUsers, getUser, readTippsForUser }
+module.exports = { readTeams, readMatches, getMatchesForTeam, readLeagueTable, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, readUsers, getUser, readTippsForUser }

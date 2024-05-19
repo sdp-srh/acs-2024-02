@@ -12,7 +12,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { Firestore } = require('@google-cloud/firestore')
-const { readMatches, readTeams, readLeagueTable, readStatus, readTipps, setTipps, readTippsForUser, readUsers, getUser  } = require('./db')
+const { readMatches, getMatchesForTeam, readTeams, readLeagueTable, readStatus, readTipps, setTipps, readTippsForUser, readUsers, getUser  } = require('./db')
 const { verifyUser } = require('./auth')
 const { calculatePointsForAll, calculateResultDetailForPlayer } = require('./betting')
 
@@ -99,6 +99,13 @@ app.get('/api/match/:id', asyncHandler(async (req, res) => {
   const matches = await readMatches()
   const result = matches.find(match => match.id === requestId)
   res.send(result)
+}))
+
+app.get('/api/matchesforteam/:teamId', asyncHandler(async (req,res) => {
+  const teamId = req.params.teamId
+  const matches = await getMatchesForTeam(teamId)
+
+  res.send(matches)
 }))
 
 

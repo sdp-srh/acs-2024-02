@@ -9,7 +9,8 @@ const calculatePointsForAll = async () => {
         const playerTipps = tipps.find(tipp => tipp.player === player.id)
         const details = calculateDetails(leagueTable, playerTipps.tipp)
         console.log(`Player: ${player.id} has ${details.totalPoints} points`)
-        results.push({player: player.id, points: details.totalPoints})
+        const cleanPlayer = {id: player.id, name: player.name}
+        results.push({player: cleanPlayer, points: details.totalPoints})
     })
     return results
 }
@@ -29,7 +30,7 @@ const calculateDetails = (table, tipps) => {
     let totalPoints = 0
     // todo add complex logic
     tipps.forEach((tipp, index) => {
-        const leagueIndex = table.findIndex(team => team.teamId === tipp.teamId)
+        const leagueIndex = table.findIndex(team => team.teamInfoId === tipp.teamId)
         const position = calculateDifferencePoints(index, leagueIndex)
         const extra = calculateExtraPoints(index, leagueIndex)
         const points = position.points + extra.points
@@ -50,6 +51,7 @@ const calculateDetails = (table, tipps) => {
 
 const calculateDifferencePoints = (tippIndex, leagueIndex) => {
     const difference = Math.abs(tippIndex - leagueIndex)
+    const realDifference = tippIndex - leagueIndex
     let points = 0
     if (difference === 0) {
         points += 5
@@ -62,7 +64,7 @@ const calculateDifferencePoints = (tippIndex, leagueIndex) => {
     }
     const result = {
         points: points,
-        difference: difference,
+        difference: realDifference,
         type: 'Platzierung'
 
     }

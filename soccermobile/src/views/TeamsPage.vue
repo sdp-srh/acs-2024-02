@@ -2,11 +2,12 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Teams Page</ion-title>
+                <ion-title>Mannschaften</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="true">
+            <ion-card>
             <ion-grid>
                 <ion-row >
                     <ion-col size="4" v-for="team in teams" :key="team.teamId" :value="team.teamId">
@@ -26,7 +27,7 @@
                 </ion-row>
 
             </ion-grid>
-
+        </ion-card>
         </ion-content>
     </ion-page>
 </template>

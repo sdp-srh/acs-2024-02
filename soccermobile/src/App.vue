@@ -6,9 +6,12 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content> 
             <ion-item @click="navigate('/home')" :class="{selected: route.path.includes('/home'), clickable: true}" >Home</ion-item>
+            <ion-item @click="navigate('/league')" :class="{selected: route.path.includes('/league'), clickable: true}">Liga</ion-item>      
             <ion-item @click="navigate('/matches')" :class="{selected: route.path.includes('/matches'), clickable: true}">Matches</ion-item>                       
             <ion-item @click="navigate('/teams')" :class="{selected: route.path.includes('/teams'), clickable: true}">Teams</ion-item>    
-            <ion-item @click="navigate('/tipps')" :class="{selected: route.path.includes('/tipps'), clickable: true}">Tipps</ion-item>
+            <ion-item @click="navigate('/mytipps')" :class="{selected: route.path.includes('/mytipps'), clickable: true}">Meine Tipps</ion-item>
+            <ion-item @click="navigate('/documentation')" :class="{selected: route.path.includes('/documentation'), clickable: true}">Dokumentation</ion-item>
+            <ion-item @click="navigate('/impressum')" :class="{selected: route.path.includes('/impressum'), clickable: true}">Impressum</ion-item>
             <!--<ion-item @click="navigate('/about')" :class="{selected: route.path.includes('/about'), clickable: true}"><ion-icon name="information-circle"></ion-icon>&nbsp;About</ion-item>    -->
         </ion-content>
       </ion-menu>

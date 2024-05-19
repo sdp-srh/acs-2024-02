@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/HomePage.vue')
   },
   {
+    path: '/league',
+    name: 'Liga',
+    component: () => import('@/views/LeagueTablePage.vue')
+  },       
+  {
     path: '/matches',
     name: 'Matches',
     component: () => import('@/views/MatchesPage.vue')
@@ -22,10 +27,30 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/TeamsPage.vue')
   },  
   {
-    path: '/tipps',
-    name: 'Tipps',
+    path: '/mytipps',
+    name: 'Meine Tipps',
     component: () => import('@/views/TippsPage.vue')
   },   
+  {
+    path: '/result/:playerId',
+    name: 'Spieler Details',
+    component: () => import('@/views/PlayerResultPage.vue')
+  },     
+  {
+    path: '/team',
+    name: 'Team',
+    component: () => import('@/views/TeamPage.vue')
+  },       
+  {
+    path: '/documentation',
+    name: 'Documentation',
+    component: () => import('@/views/DocumentationPage.vue')
+  },        
+  {
+    path: '/impressum',
+    name: 'Impressum',
+    component: () => import('@/views/ImpressumPage.vue')
+  },     
   {
     path: '/:pathMatch(.*)*', // or '/:catchAll(.*)' for Vue Router 3
     name: 'NotFound',

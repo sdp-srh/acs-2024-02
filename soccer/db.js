@@ -58,11 +58,12 @@ const readMatches = async () => {
 }
 
 
-const readRankings = async () => {
+const readLeagueTable = async () => {
   if (MODE === 'DEV') {
-    return getDemoData('rankings')
+    return getDemoData('leaguetable')
   }  
   if (!entries.length) {
+    // change to leaguetable
     const snapshot = await firestore.collection('ranking').get()
     const dbEntries = snapshot.docs.map(doc => doc.data())
     dbEntries.sort((a,b) => {
@@ -125,12 +126,33 @@ const getLastGameForTeam = async (teamId) => {
   return lastMatch
 }
 
-const readTipps = async (userId) => {
+const readTipps = async () => {
   if (MODE === 'DEV') {
     return getDemoData('tipps')
   }
+  // TODO get the data for all users
   const snapshot = await firestore.collection('tipps').where('userId', '==', userId).get()
   const tipps = snapshot.docs.map(doc => doc.data())
+  return tipps
+}
+
+const readTippsForUser = async (userid) => {
+  let tipps
+  if (MODE === 'DEV') {
+    const allTipps = getDemoData('tipps')
+    const found = allTipps.find(tipp => tipp.player === userid)
+    if (found) {
+      tipps = found.tipp
+    }
+    else {
+      tipps = []
+    }
+  }
+  else {
+    const snapshot = await firestore.collection('tipps').where('userId', '==', userId).get()
+    tipps = snapshot.docs.map(doc => doc.data())
+  }
+
   return tipps
 }
   
@@ -140,16 +162,17 @@ const setTipps = async (userId, tipps) => {
 }
 
 const getUser = async (userId) => {
-  const testUser = {
-    id:'testuser',
-    name:'Test User'
-  }
-  return testUser
+  const users = await readUsers()
+  const user = users.find(user => user.id === userId)
+  return user
 } 
 
 const readUsers = async () => {
-  return [await getUser('testuser')]
+  if (MODE === 'DEV') {
+    return getDemoData('user')
+  }
+  return []
 }
 
 
-module.exports = { readTeams, readMatches, readRankings, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, readUsers, getUser }
+module.exports = { readTeams, readMatches, readLeagueTable, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, readUsers, getUser, readTippsForUser }

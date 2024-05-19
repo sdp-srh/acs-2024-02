@@ -1,0 +1,15 @@
+[
+    {
+        "id":"donald",
+        "nickname":"Donald",
+        "name": "Donald Duck",
+        "mail": "dd@xyz.com"
+    },
+    {
+        "id":"micki",
+        "nickname":"Micki",
+        "name": "micki maus",
+        "mail": "mm@xyz.com"
+    }
+
+]

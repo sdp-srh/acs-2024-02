@@ -158,8 +158,9 @@ const readTippsForUser = async (userid) => {
 }
   
 const setTipps = async (userId, tipps) => {
-  console.log("Setting tipps for user: ", userId)
-  console.log("Tipps: ", tipps)
+  // TODO implement save
+  // console.log("Setting tipps for user: ", userId)
+  // console.log("Tipps: ", tipps)
 }
 
 const getUser = async (userId) => {

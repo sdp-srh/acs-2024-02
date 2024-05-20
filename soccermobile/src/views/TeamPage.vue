@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ team?.teamName }}</ion-title>
+        <ion-title><img :src="team?.teamIconUrl" class="team-icon" /> {{ team?.teamName }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -54,7 +54,7 @@ const loadTeam = async () => {
   const response = await fetch(`/api/team/${teamId.value}`)	
   const data = await response.json()
   team.value = data
-  
+  console.log(team.value)
 }
 
 const loadMatches = async () => {
@@ -73,3 +73,14 @@ const loadMatches = async () => {
 }
 */
 </script>
+
+<style scoped>
+.team-icon {
+  height: 1.4em;
+  /* Adjust this value as needed */
+  width: auto;
+  /* Keeps the aspect ratio intact */
+  vertical-align: middle;
+  /* Aligns the image vertically with the text */
+}
+</style>

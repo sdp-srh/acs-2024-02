@@ -20,6 +20,7 @@ const { calculatePointsForAll, calculateResultDetailForPlayer } = require('./bet
 // start express app
 const app = express()
 const port = process.env.PORT || 3000
+const MODE = process.env.MODE || 'PROD'
 // include body parser for easier handling of json in the request
 app.use(express.json())
 
@@ -63,7 +64,7 @@ app.get('/api/team', asyncHandler(async (req, res) => {
 // find a team with an ID
 app.get('/api/team/:id', asyncHandler(async (req, res) => {
   const id = req.params.id
-  console.log(`Looking for Team with id: ${id}`)
+  // console.log(`Looking for Team with id: ${id}`)
   const teams = await readTeams()
   const result = teams.find(team => team.teamId == id)
   res.send(result)
@@ -95,7 +96,7 @@ app.get('/api/match', asyncHandler(async (req,res) => {
 // find a team with an ID
 app.get('/api/match/:id', asyncHandler(async (req, res) => {
   const requestId = req.params.id
-  console.log(`Looking for Match with id: ${requestId}`)
+  // console.log(`Looking for Match with id: ${requestId}`)
   const matches = await readMatches()
   const result = matches.find(match => match.id === requestId)
   res.send(result)
@@ -172,7 +173,7 @@ app.get('/api/resultplayer/:playerid', asyncHandler(async (req, res) => {
  * initializing app
  */
 app.listen(port, () => {
-  console.log(`Soccer app is starting at ${port}`)
+  console.log(`Soccer app is starting at ${port} in mode ${MODE}`)
   // setup some stuff in the beginning
   console.log('Soccer app running')
 })

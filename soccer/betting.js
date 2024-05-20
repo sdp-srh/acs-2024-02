@@ -8,7 +8,7 @@ const calculatePointsForAll = async () => {
     players.forEach(player => {
         const playerTipps = tipps.find(tipp => tipp.player === player.id)
         const details = calculateDetails(leagueTable, playerTipps.tipp)
-        console.log(`Player: ${player.id} has ${details.totalPoints} points`)
+        // console.log(`Player: ${player.id} has ${details.totalPoints} points`)
         const cleanPlayer = {id: player.id, name: player.name}
         results.push({player: cleanPlayer, points: details.totalPoints})
     })

@@ -90,7 +90,8 @@ const getMatchesForTeam = async (teamId) => {
   } else {
     matches = await readMatches()
   }
-  const results = matches.filter(match => match.team1.teamId === teamId || match.team2.teamId === teamId)
+  const results = matches.filter(match => match.team1.teamId == teamId || match.team2.teamId == teamId)
+  results.sort((a,b) => a.matchDateTime.localeCompare(b.matchDateTime))
   return results
 }
 

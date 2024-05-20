@@ -61,11 +61,11 @@ app.get('/api/team', asyncHandler(async (req, res) => {
 }))
 
 // find a team with an ID
-app.get('/api/team/:id', asyncHandler((req, res) => {
-  const requestId = req.params.id
-  console.log(`Looking for Team with id: ${requestId}`)
-  const teams = readTeams()
-  const result = teams.find(team => team.id === requestId)
+app.get('/api/team/:id', asyncHandler(async (req, res) => {
+  const id = req.params.id
+  console.log(`Looking for Team with id: ${id}`)
+  const teams = await readTeams()
+  const result = teams.find(team => team.teamId == id)
   res.send(result)
 }))
 

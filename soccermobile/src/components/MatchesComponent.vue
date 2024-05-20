@@ -1,88 +1,68 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Spiele</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <table class="ionic-table" v-if="!display || display==='compact'">
+        <thead>
+            <tr>
+                <th>Heim</th>
+                <th>Result</th>
+                <th>Auswärts</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="match in matches" :key="match.matchID">
+                <td><img :src="match.team1.teamIconUrl" class="team-icon" />&nbsp;{{ match.team1.teamName }}</td>
+                <td>{{ getMatchResult(match, 'compact') }}</td>
+                <td><img :src="match.team2.teamIconUrl" class="team-icon" />&nbsp;{{ match.team2.teamName }}</td>
+                <td>&nbsp;{{ formatDate(match.matchDateTime, 'compact') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="ionic-table" v-if="display==='full'">
+        <thead>
+            <tr>
+                <th>Heim</th>
+                <th>Result</th>
+                <th>Auswärts</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="match in matches" :key="match.matchID">
+                <td><img :src="match.team1.teamIconUrl" class="team-icon" />&nbsp;{{ match.team1.teamName }}</td>
+                <td>{{ getMatchResult(match, 'full') }}</td>
+                <td><img :src="match.team2.teamIconUrl" class="team-icon" />&nbsp;{{ match.team2.teamName }}</td>
+                <td>&nbsp;{{ formatDate(match.matchDateTime, 'full') }}</td>
+            </tr>
+        </tbody>
+    </table>
 
-    <ion-content>
-      <ion-card>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-
-
-              <ion-select label="Spieltag" label-placement="floating" v-model="selectedDay"
-                placeholder="Spieltag auswählen">
-                <ion-select-option v-for="day in days" :key="day" :value="day">
-                  {{ day }}
-                </ion-select-option>
-              </ion-select>
-
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <MatchesComponent :matches="currentMatches" display="full" />
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
-    </ion-content>
-  </ion-page>
 </template>
 
+
 <script setup>
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonSelect,
-  IonSelectOption
-} from '@ionic/vue';
-import MatchesComponent from '@/components/MatchesComponent.vue'
-import { onMounted, ref, watch } from 'vue'
-const matches = ref([])
-const currentMatches = ref([])
-let currentMatchDay = 15
-const selectedDay = ref(currentMatchDay)
-// create an array of days from 1 to 34
-const days = Array.from({ length: 34 }, (_, i) => i + 1)
-
-
-onMounted(async () => {
-  console.log('loading teams')
-  if (matches.value.length === 0) {
-    loadMatches()
-  }
+import { formatDate } from '@/utils/formatter'
+import { defineProps } from 'vue'
+// display modes compact, full
+const props = defineProps({
+    matches: Array,
+    display: String
 })
 
-const loadMatches = async () => {
-  // filtering must be done on the server side
-  const response = await fetch('/api/match')
-  const data = await response.json()
-  matches.value = data
-  // here we have to get the current match day from the status
-  currentMatchDay = 11
-  filterMatches(currentMatchDay)
+const getMatchResult = (match, display) => {
+    let resultText = ''
+    const finalResult = match.matchResults.find(m => m.resultTypeID == 2)
+    if (finalResult) {
+        resultText = finalResult.pointsTeam1 + ' : ' + finalResult.pointsTeam2
+    }
+    if (display === 'full') {
+        const halftimeResult = match.matchResults.find(m => m.resultTypeID == 1)
+        if (halftimeResult) {
+            resultText += '  (' + halftimeResult.pointsTeam1 + ':' + halftimeResult.pointsTeam2 + ')'
+        }
+    }
+    return resultText
 }
 
-const filterMatches = (day) => {
-  currentMatches.value = matches.value.filter(m => m.group.groupOrderID == day)
-}
-
-watch(selectedDay, (newValue, oldValue) => {
-  filterMatches(newValue)
-  console.log(`Selected number changed from ${oldValue} to ${newValue}`);
-  // You can add any additional logic you want to perform when the selected number changes
-});
 /*
 
 {
@@ -190,8 +170,8 @@ watch(selectedDay, (newValue, oldValue) => {
   },
 */
 
-</script>
 
+</script>
 
 <style scoped>
 /* Add your component styles here */
@@ -220,3 +200,5 @@ watch(selectedDay, (newValue, oldValue) => {
   /* Aligns the image vertically with the text */
 }
 </style>
+
+

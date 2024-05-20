@@ -7,38 +7,18 @@
         </ion-header>
 
         <ion-content>
+          <ion-card>
             <ion-grid>
             <ion-row>
                 <ion-col size="12">
                   <LeagueTable :ranks="ranks" />
-                  <!--
-                <table class="ionic-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Team</th>
-                        <th>Points</th>
-                        <th>Goals</th>
-                        <th>Matches</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="rank in ranks" :key="rank.teamInfoId">
-                        <td>{{ rank.rank }}</td>
-                        <td>
-                            <img :src="rank.teamIconUrl" class="team-icon" />&nbsp;{{ rank.teamName }}
-                        </td>
-                        <td>{{ rank.points }}</td>
-                        <td>{{ rank.goalDiff }}</td>
-                        <td>{{ rank.matches }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-              -->
+
                 </ion-col>
             </ion-row>
             </ion-grid>
+          </ion-card>
         </ion-content>
+      
     </ion-page>
 </template>
 
@@ -51,7 +31,9 @@ import {
     IonContent,
     IonGrid,
     IonRow,
-    IonCol
+    IonCol,
+    IonCard,
+
 } from '@ionic/vue';
 import LeagueTable from '@/components/LeagueTable.vue'
 

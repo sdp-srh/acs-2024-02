@@ -8,12 +8,19 @@ GET {{server}}/
 ### read all teams
 GET {{server}}/api/team
 
+### read all teams
+GET {{server}}/api/team/134
+
+
 
 ### read all matches
 GET {{server}}/api/match
 
+### read all matches
+GET {{server}}/api/matchesforteam/134
+
 ### read ranking
-GET {{server}}/api/ranking
+GET {{server}}/api/leaguetable
 
 
 ### read status

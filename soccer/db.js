@@ -132,9 +132,22 @@ const readTipps = async () => {
     return getDemoData('tipps')
   }
   // TODO get the data for all users
+  const userId = 'donald'
   const snapshot = await firestore.collection('tipps').where('userId', '==', userId).get()
   const tipps = snapshot.docs.map(doc => doc.data())
-  return tipps
+
+  return tipps.tipps
+}
+
+const deleteTipps = async () => { 
+  const tippsCollection = await firestore.collection(`tipps`)
+  const snapshot = await tippsCollection.get()
+  const batch = firestore.batch()
+  snapshot.docs.forEach(doc => {
+    batch.delete(doc.ref)
+  })
+  await batch.commit()
+  console.log(`tipps deleted`)
 }
 
 const readTippsForUser = async (userid) => {
@@ -150,17 +163,28 @@ const readTippsForUser = async (userid) => {
     }
   }
   else {
-    const snapshot = await firestore.collection('tipps').where('userId', '==', userId).get()
-    tipps = snapshot.docs.map(doc => doc.data())
+    // read data from firestore
+    const snapshot = await firestore.collection('tipps').doc('' + userid).get()
+    const rawData = snapshot.data()
+    if (rawData) {
+      tipps = rawData.tipps
+    }
+    else {
+      tipps = []
+    } 
   }
 
   return tipps
 }
   
 const setTipps = async (userId, tipps) => {
-  // TODO implement save
-  // console.log("Setting tipps for user: ", userId)
-  // console.log("Tipps: ", tipps)
+  const tippCollection = await firestore.collection(`tipps`)
+  const tippDocRef = tippCollection.doc('' + userId)
+  const obj = {
+    tipps: tipps
+  }
+  await tippDocRef.set(obj)
+  return `Tipps saved for ${userId}`
 }
 
 const getUser = async (userId) => {
@@ -173,8 +197,8 @@ const readUsers = async () => {
   if (MODE === 'DEV') {
     return getDemoData('user')
   }
-  return []
+  return [{id: 'donald', name: 'Donald Duck', email: ' '}]
 }
 
 
-module.exports = { readTeams, readMatches, getMatchesForTeam, readLeagueTable, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, readUsers, getUser, readTippsForUser }
+module.exports = { readTeams, readMatches, getMatchesForTeam, readLeagueTable, getNextGameForTeam, getLastGameForTeam, readStatus, readTipps, setTipps, deleteTipps, readUsers, getUser, readTippsForUser }

@@ -12,10 +12,10 @@ const fs = require('fs')
 const path = require('path')
 
 const { Firestore } = require('@google-cloud/firestore')
-const { readMatches, getMatchesForTeam, readTeams, readLeagueTable, readStatus, readTipps, setTipps, readTippsForUser, readUsers, getUser  } = require('./db')
+const { readMatches, getMatchesForTeam, readTeams, readLeagueTable, readStatus, readTipps, setTipps, deleteTipps, readTippsForUser, readUsers, getUser  } = require('./db')
 const { verifyUser } = require('./auth')
-const { calculatePointsForAll, calculateResultDetailForPlayer } = require('./betting')
-
+const { calculatePointsForAll, calculateResultDetailForPlayer } = require('./betting');
+const { importAllData, importTeams, importMatches, importRankings, deleteTeams, deleteMatches, deleteRankings, loadStatusData } = require('./openliga');
 
 // start express app
 const app = express()
@@ -116,12 +116,12 @@ app.get('/api/mytipp', verifyUser, asyncHandler(async (req, res) => {
   // TODO handle no tipps available and send shuffled teams
   const myTipps = await readTippsForUser(user.id)
   
-  if (myTipps) {
+  if (myTipps && myTipps.length > 0) {
     res.send(myTipps)
   }
   else {
     // get the teams in random order
-    const teams = readTeams()
+    const teams = await readTeams()
     // shuffle the teams array
     const shuffledTeams = teams.sort(() => Math.random() - 0.5)
     res.send(shuffledTeams)
@@ -168,14 +168,63 @@ app.get('/api/resultplayer/:playerid', asyncHandler(async (req, res) => {
   res.send(details)
 }))
 
+app.delete('/api/admin/tipps', verifyUser, asyncHandler(async (req, res) => {
+  const message = await deleteTipps()
+  res.send({ msg: message })
+}))
+
+
+/**
+ * data import routes
+ 
+ */
+app.get('/api/admin/importOLData', verifyUser, asyncHandler(async (req, res) => {
+  const message = await importAllData()
+  res.send({ msg: message })
+}))
+
+app.get('/api/admin/importOLTeams', verifyUser, asyncHandler(async (req, res) => {
+  const message = await importTeams()
+  res.send({ msg: message })
+}))
+
+app.delete('/api/admin/teams', verifyUser, asyncHandler(async (req, res) => {
+  const message = await deleteTeams()
+  res.send({ msg: message })
+}))
+
+app.delete('/api/admin/matches', verifyUser, asyncHandler(async (req, res) => {
+  const message = await deleteMatches()
+  res.send({ msg: message })
+}))
+
+app.delete('/api/admin/rankings', verifyUser, asyncHandler(async (req, res) => {
+  const message = await deleteRankings()
+  res.send({ msg: message })
+}))
+
+app.get('/api/admin/importOLMatches', verifyUser, asyncHandler(async (req, res) => {
+  const message = await importMatches()
+  res.send({ msg: message })
+}))
+
+app.get('/api/admin/importOLRankings', verifyUser, asyncHandler(async (req, res) => {
+  const message = await importRankings()
+  res.send({ msg: message })
+}))
+
+app.get('/api/admin/loadStatusData', verifyUser, asyncHandler(async (req, res) => {
+  const message = await loadStatusData()
+  res.send({ msg: message })
+}))
+
 
 /**
  * initializing app
  */
 app.listen(port, () => {
   console.log(`Soccer app is starting at ${port} in mode ${MODE}`)
-  // setup some stuff in the beginning
-  console.log('Soccer app running')
+  console.log(`League: ${process.env.LEAGUE}, Season: ${process.env.SEASON}`)
 })
 
 

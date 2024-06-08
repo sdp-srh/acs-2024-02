@@ -1,0 +1,41 @@
+@server = http://localhost:3000
+
+
+### test the app
+GET {{server}}/
+
+### read all teams
+GET {{server}}/api/team
+
+### read all teams
+DELETE {{server}}/api/admin/teams
+
+
+### read all teams
+DELETE {{server}}/api/admin/matches
+
+
+### read all teams
+DELETE {{server}}/api/admin/rankings
+
+
+### read all tipps
+DELETE {{server}}/api/admin/tipps
+
+### import all data
+GET {{server}}/api/admin/importOLData
+
+### import all data
+GET {{server}}/api/admin/importOLTeams
+
+
+### import matches
+GET {{server}}/api/admin/importOLMatches
+
+
+### import rankings
+GET {{server}}/api/admin/importOLRankings
+
+### load the status data rankings
+GET {{server}}/api/admin/loadStatusData
+

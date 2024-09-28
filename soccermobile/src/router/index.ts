@@ -50,7 +50,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/impressum',
     name: 'Impressum',
     component: () => import('@/views/ImpressumPage.vue')
-  },     
+  },
+  {
+    path: '/admin-tipps',
+    name: 'AdminTipps',
+    component: () => import('@/views/AdminTippsPage.vue')
+  },
+  {
+    path: '/admin-users',
+    name: 'AdminUsers',
+    component: () => import('@/views/AdminUsersPage.vue')
+  },         
   {
     path: '/:pathMatch(.*)*', // or '/:catchAll(.*)' for Vue Router 3
     name: 'NotFound',

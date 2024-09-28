@@ -168,6 +168,23 @@ app.get('/api/resultplayer/:playerid', asyncHandler(async (req, res) => {
   res.send(details)
 }))
 
+
+app.post('/api/mytipp', verifyUser, asyncHandler(async (req, res) => {
+  // read from logon info
+  const passcode = req.body.passcode
+  if (passcode !== 'letstipp24') {
+    const message = { status: 'error', msg: 'Wrong passcode'}
+    res.send(message) 
+    return   
+  }
+  const tipps = req.body.tipps
+  const userId = req.body.userId
+  // TODO check last date and add the tipps
+  const result = await setTipps(userId, tipps )
+  const message = { status: 'ok', msg: `Tipps for user are saved`}
+  res.send(message)
+}))
+
 app.delete('/api/admin/tipps', verifyUser, asyncHandler(async (req, res) => {
   const message = await deleteTipps()
   res.send({ msg: message })
@@ -178,6 +195,17 @@ app.delete('/api/admin/tipps', verifyUser, asyncHandler(async (req, res) => {
  * data import routes
  
  */
+
+const verifyAdminSecret = (req) => {
+  const secret = req.headers['x-admin-secret']
+  if (secret === process.env.ADMIN_SECRET) {
+    return true
+  }
+  else {
+    throw new Error('Not authorized')
+  }
+}
+
 app.get('/api/admin/importOLData', verifyUser, asyncHandler(async (req, res) => {
   const message = await importAllData()
   res.send({ msg: message })
@@ -216,6 +244,13 @@ app.get('/api/admin/importOLRankings', verifyUser, asyncHandler(async (req, res)
 app.get('/api/admin/loadStatusData', verifyUser, asyncHandler(async (req, res) => {
   const message = await loadStatusData()
   res.send({ msg: message })
+}))
+
+app.post('/api/admin/user', verifyUser, asyncHandler(async (req, res) => {
+  verifyAdminSecret(req)
+  console.log('create new user')
+  //const message = await importRankings()
+  //res.send({ msg: message })
 }))
 
 

@@ -23,23 +23,24 @@
           </ion-item>
           <ion-item>
             <ion-label position="floating">Nickname</ion-label>
-            <ion-input :value="nickname" type="text" @ionInput="nickname = $event.target.value"></ion-input>
+            <!--<ion-input :value="nickname" type="text" @ionInput="nickname = $event.target.value"></ion-input>-->
+            <ion-input v-model="nickname" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Passwort</ion-label>
-            <ion-input :value="password" type="text" @ionInput="password = $event.target.value"></ion-input>
+            <ion-input v-model="password" type="password"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Name</ion-label>
-            <ion-input :value="fullname" type="text" @ionInput="fullname = $event.target.value"></ion-input>
+            <ion-input v-model="fullname" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Email</ion-label>
-            <ion-input :value="mail" type="text" @ionInput="mail = $event.target.value"></ion-input>
+            <ion-input v-model="mail" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Secret</ion-label>
-            <ion-input :value="scode" type="text"  @ionInput="scode = $event.target.value" ></ion-input>
+            <ion-input v-model="scode" type="password"></ion-input>
           </ion-item>
           <ion-item>
             <h3>{{ scode  }}</h3>
@@ -56,6 +57,7 @@
 </template>
 
 <script setup>
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSelect, IonSelectOption, IonCard, IonList, IonItem, IonLabel, IonInput, IonButton, IonText } from '@ionic/vue'
 import { ref, onMounted } from 'vue'
 import { toastController } from '@ionic/vue'
 
@@ -110,7 +112,7 @@ const updateFormWithSelectedPlayer = (newId) => {
 const save = async () => {
   
   console.log('secret:', scode.value)
-  const playerObJ = {
+  const playerObj = {
     id: selectedPlayerId.value,
     nickname: nickname.value,
     password: password.value,
@@ -118,18 +120,18 @@ const save = async () => {
     mail: mail.value,
     scode: scode.value
   }
-  
+  /*
   const response = await fetch('/api/admin/user', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'x-admin-secret': scode.value
     },
-    body: JSON.stringify(user.value)
+    body: JSON.stringify(playerObj)
   })
   const message = await response.json()
   showMessage(message.msg)
-  
+  */
 }
 
 // Reset form to blank fields and reset selected player to 'NEW'
@@ -140,6 +142,7 @@ const reset = () => {
 
 // Reset form fields
 const resetForm = () => {
+  selectedPlayerId.value = 'NEW'
   nickname.value = ''
   password.value = ''
   fullname.value = ''

@@ -13,6 +13,7 @@ const path = require('path')
 
 const { Firestore } = require('@google-cloud/firestore')
 const { readMatches, getMatchesForTeam, readTeams, readLeagueTable, readStatus, readTipps, setTipps, deleteTipps, readTippsForUser, readUsers, getUser  } = require('./db')
+const { maintainUser, maintainTipps } = require('./admin')
 const { verifyUser } = require('./auth')
 const { calculatePointsForAll, calculateResultDetailForPlayer } = require('./betting');
 const { importAllData, importTeams, importMatches, importRankings, deleteTeams, deleteMatches, deleteRankings, loadStatusData } = require('./openliga');
@@ -249,8 +250,18 @@ app.get('/api/admin/loadStatusData', verifyUser, asyncHandler(async (req, res) =
 app.post('/api/admin/user', verifyUser, asyncHandler(async (req, res) => {
   verifyAdminSecret(req)
   console.log('create new user')
-  //const message = await importRankings()
-  //res.send({ msg: message })
+  const message = await maintainUser(req.body)
+  res.send({ msg: message })
+}))
+
+app.post('/api/admin/tipp', verifyUser, asyncHandler(async (req, res) => {
+  verifyAdminSecret(req)
+  console.log('add tipps for player')
+  const data = req.body
+  const tipps = data.tipp
+  const player = data.player
+  const message = await maintainTipps(tipps, player)
+  res.send({ msg: message })
 }))
 
 

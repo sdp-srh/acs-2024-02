@@ -117,10 +117,9 @@ const save = async () => {
     nickname: nickname.value,
     password: password.value,
     fullname: fullname.value,
-    mail: mail.value,
-    scode: scode.value
+    mail: mail.value
   }
-  /*
+  
   const response = await fetch('/api/admin/user', {
     method: 'POST',
     headers: {
@@ -131,7 +130,6 @@ const save = async () => {
   })
   const message = await response.json()
   showMessage(message.msg)
-  */
 }
 
 // Reset form to blank fields and reset selected player to 'NEW'

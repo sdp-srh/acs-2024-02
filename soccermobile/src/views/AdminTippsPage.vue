@@ -105,8 +105,6 @@ const updateDisplayedTipps = (playerId) => {
   
 }
 
-
-
 const handleReorder = (event) => {
   const fromIndex = event.detail.from
   const toIndex = event.detail.to
@@ -125,10 +123,13 @@ const handleReorder = (event) => {
 const save = async () => {
 
   console.log('saving tipps')
-  // console.log(displayedTipps.value)
-  
-  const saveObject = {
-    player: selectedPlayerId.value,
+  const player = players.value.find(player => player.id === selectedPlayerId.value)
+  const playerData = {
+    id: selectedPlayerId.value,
+    nickname: player.nickname
+  }
+  const saveObj = {
+    player: playerData,
     tipp: displayedTipps.value.tipp
   }
   const response = await fetch('/api/admin/tipp', {
